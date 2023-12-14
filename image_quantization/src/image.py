@@ -20,12 +20,19 @@ def rgb_vector_to_image(rgb_vector: np.ndarray, image_shape: tuple):
     return Image(rgb_vector.reshape(image_shape))
 
 
-def plot_rgb_vector(rgb_vector: np.ndarray, figsize=(10, 5), alpha=0.6, s=4):
+def plot_rgb_vector(
+    rgb_vector: np.ndarray,
+    figsize=(10, 5),
+    title: str = None,
+    alpha: float = 0.6,
+    s: int = 4,
+):
     fig = plt.figure(figsize=figsize)
     axes = fig.add_subplot(projection="3d")
     r, g, b = rgb_vector[:, 0], rgb_vector[:, 1], rgb_vector[:, 2]
     colors = rgb_vector / 255
     axes.scatter(r, g, b, c=colors, marker="o", s=s, alpha=alpha)
+    axes.set_title(title)
     plt.tight_layout()
     plt.show()
 
