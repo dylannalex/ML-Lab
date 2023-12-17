@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class KMeans:
@@ -42,3 +43,45 @@ class KMeans:
                 break
             prev_centers = np.copy(self.cluster_centers_)
         return self
+
+
+def plot_k_metrics(
+    k_values: list[int],
+    clusters_cost_list: list[float],
+    execution_time_list: list[float],
+    figsize: tuple = (10, 4),
+) -> None:
+    # Plot the results
+    fig, ax1 = plt.subplots(figsize=figsize)
+
+    ## Clusters cost plot
+    line1 = ax1.plot(
+        k_values,
+        clusters_cost_list,
+        label="Clusters Cost",
+        color="royalblue",
+        marker="+",
+    )
+    ax1.set_xlabel("k")
+    ax1.set_ylabel("Clusters Cost")
+    ax1.tick_params(axis="y")
+    ax1.set_xticks(k_values)
+
+    ## Execution time plot
+    ax2 = ax1.twinx()
+    line2 = ax2.plot(
+        k_values,
+        execution_time_list,
+        label="Execution Time",
+        color="orange",
+        marker="^",
+    )
+    ax2.set_ylabel("Execution Time [seconds]")
+    ax2.tick_params(axis="y")
+
+    ## Add legends
+    lines = line1 + line2
+    labels = [line.get_label() for line in lines]
+    ax1.legend(lines, labels, loc="upper left")
+
+    plt.show()
